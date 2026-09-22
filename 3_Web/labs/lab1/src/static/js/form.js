@@ -1,5 +1,5 @@
 import { Point2D } from './cartesian/Point2D.js';
-import { saveResult } from './resultTable.js';
+import { saveResult } from './storage.js';
 
 let currentPoint = new Point2D({x: 0, y: 0, r: 0}, isPointInArea);
 
