@@ -33,8 +33,8 @@ print_string:
 ; Возвращает в rax: число, rdx : его длину в символах
 ; rdx = 0 если число прочитать не удалось
 parse_uint:
-    xor rax, rax
-    xor rdx, rdx
+    xor eax, eax
+    xor edx, edx
 
     call loop_symbol
     mov r8, rax
@@ -46,26 +46,21 @@ parse_uint:
 
 
 loop_symbol:
-    xor rax, rax
-    xor r8, r8
     .counter:
-        mov rcx, byte[rdi + r8]
-        cmp rcx, 0
+        mov cl, byte[rdi]
+        cmp cl, 0
         je .return
         sub rcx, '0'
-        jb .nan
         cmp rcx, '9' 
-        ja .nan
+        inc rdi
+        ja .counter
 
         imul rax, rax, 10
         add  rax, rcx
 
-        inc r8
-        
-        jmp counter
-
-    .nan:
+        inc rdx
         jmp .counter
+
     .return:
         ret
 
