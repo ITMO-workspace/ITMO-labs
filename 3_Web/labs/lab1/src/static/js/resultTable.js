@@ -1,7 +1,6 @@
 const table = document.getElementById("result-table");
 
-function saveResult(result) {
-
+export function saveResult(currentPoint) {
     const newRow = table.insertRow(-1);
 
     const rowX = newRow.insertCell(0);
@@ -10,12 +9,13 @@ function saveResult(result) {
     const rowTime = newRow.insertCell(3);
     const rowResult = newRow.insertCell(4);
 
+    const result = currentPoint.inArea();
+    const currentValue = currentPoint.value;
     const prevResults = JSON.parse(localStorage.getItem("results") || "[]");
-    
     const newResult = {
-        X: state.x,
-        Y: state.y,
-        R: state.r,
+        X: currentValue.x.value,
+        Y: currentValue.y.value,
+        R: currentValue.r.value,
         result: result,
         time: new Date().toISOString()
     };
@@ -33,7 +33,7 @@ function saveResult(result) {
     rowResult.innerText = result;
 }
 
-function loadResults() {
+export function loadResults() {
     const saved = localStorage.getItem("results");
     if (!saved) return;
     

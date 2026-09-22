@@ -75,7 +75,7 @@
 
             <div class="input-holder" id="y-input-holder">
                 <p>Введите Y (-5, ..., 5)</p>
-                <input type="text" name="Y" id="Y-input" required>
+                <input type="text" name="Y" id="Y-input" required maxlength="15">
             </div>
 
             <div class="input-holder" id="r-input-holder">
@@ -101,9 +101,16 @@
     </div>
 
 </body>
-<script type="text/javascript" src="js/main.js"></script>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/resultTable.js"></script>
+<script type="module" src="js/form.js"></script>
+
+<script type="module" src="js/cartesian/CartesianValue.js"></script>
+<script type="module" src="js/cartesian/Point2D.js"></script>
+<script type="module" src="js/cartesian/XCoordinate.js"></script>
+<script type="module" src="js/cartesian/YCoordinate.js"></script>
+<script type="module" src="js/cartesian/Radius.js"></script>
+
 <script type="text/javascript" src="js/warning.js"></script>
 <script type="text/javascript" src="js/canvas.js"></script>
-<script type="text/javascript" src="js/resultTable.js"></script>
-<script type="text/javascript" src="js/form.js"></script>
 </html>

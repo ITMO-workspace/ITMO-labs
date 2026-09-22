@@ -1,10 +1,7 @@
-window.onload = () => {
-    setRandomR();
-    loadResults()
-}
+import { bindEventListeners } from './form.js';
+import { loadResults } from './resultTable.js';
 
-let state = {
-    x: 0,
-    y: 0,
-    r: 1.0,
-};
+window.onload = () => {
+    loadResults();
+    bindEventListeners();
+}
