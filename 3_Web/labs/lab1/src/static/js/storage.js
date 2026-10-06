@@ -31,6 +31,9 @@ export function saveResult(currentPoint) {
     rowTime.innerText = now.toLocaleString('ru-RU');
 
     rowResult.innerText = result;
+
+    const warningBlock = document.querySelector(".warning");
+    warningBlock.classList.remove("show");
 }
 
 export function loadResults() {
