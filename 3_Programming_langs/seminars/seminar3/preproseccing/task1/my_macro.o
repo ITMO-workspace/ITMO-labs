@@ -1,0 +1,10 @@
+%line 2+1 my_macro.asm
+ push rax
+
+ push rdx
+%line 18+1 my_macro.asm
+
+%line 10+1 my_macro.asm
+ pop rdi
+
+ pop rax

@@ -1,0 +1,38 @@
+%line 4+1 sc5.asm
+ db 'a' + 0
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 1
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 2
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 3
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 4
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 5
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 6
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 7
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 8
+
+ db ", "
+%line 4+1 sc5.asm
+ db 'a' + 9

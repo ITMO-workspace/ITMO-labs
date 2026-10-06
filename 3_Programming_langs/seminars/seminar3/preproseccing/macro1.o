@@ -1,0 +1,4 @@
+%line 2+1 macro1.asm
+ db "hello"
+ db ","
+ db " world"

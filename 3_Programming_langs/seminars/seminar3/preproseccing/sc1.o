@@ -1,0 +1,6 @@
+%line 5+1 sc1.asm
+mov rax, 1 * 3
+
+
+
+mov rax, 100 * 3
