@@ -16,7 +16,7 @@ public class RequestHandler {
 
         String method = params.getOrDefault("REQUEST_METHOD", "GET");
         if (!"GET".equalsIgnoreCase(method)) {
-            return errorJson("Method Not Allowed");
+            return errorJson(405, "Method Not Allowed");
         }
 
         String queryString = params.getOrDefault("QUERY_STRING", "");
@@ -27,7 +27,7 @@ public class RequestHandler {
         String rawR = query.get("r");
 
         if (rawX == null || rawY == null || rawR == null) {
-            return errorJson("Missing required parameters: x, y, r");
+            return errorJson(400, "Missing required parameters: x, y, r");
         }
 
         double x, y, r;
@@ -36,7 +36,7 @@ public class RequestHandler {
             y = Double.parseDouble(rawY);
             r = Double.parseDouble(rawR);
         } catch (NumberFormatException e) {
-            return errorJson("Parameters x, y, r must be numeric.");
+            return errorJson(400, "Parameters x, y, r must be numeric.");
         }
 
         Point point = new Point(x, y, r);
@@ -47,17 +47,16 @@ public class RequestHandler {
         String scriptTimeStr = String.format("%.2f", execTime);
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        return "HTTP/1.1 200 OK\r\n" +
-               "Content-Type: application/json; charset=UTF-8\r\n" +
-               "\r\n" +
-               "{" +
-               "\"x\":" + x + "," +
-               "\"y\":" + y + "," +
-               "\"r\":" + r + "," +
-               "\"inside\":" + inside + "," +
-               "\"serverTime\":\"" + currentTime + "\"," +
-               "\"scriptTime\":\"" + scriptTimeStr + "\"" +
-               "}";
+        String json = "{" +
+            "\"x\":" + x + "," +
+            "\"y\":" + y + "," +
+            "\"r\":" + r + "," +
+            "\"inside\":" + inside + "," +
+            "\"serverTime\":\"" + currentTime + "\"," +
+            "\"scriptTime\":\"" + scriptTimeStr + "\"" +
+        "}";
+
+        return httpOk(json);
     }
 
     private static Map<String, String> parseQuery(String qs) {
@@ -73,10 +72,22 @@ public class RequestHandler {
         return map;
     }
 
-    private static String errorJson(String message) {
-        return "HTTP/1.1 400 Bad Request\r\n" +
+    private static String httpOk(String body) {
+        return "HTTP/1.1 200 OK\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
+               "Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length + "\r\n" +
                "\r\n" +
-               "{\"error\":\"" + message + "\"}";
+               body;
+    }
+
+    private static String errorJson(int status, String message) {
+        String body = "{\"error\":\"" + message + "\"}";
+        String reason = (status == 400) ? "Bad Request" : "Method Not Allowed";
+        
+        return "HTTP/1.1 " + status + " " + reason + "\r\n" +
+               "Content-Type: application/json; charset=UTF-8\r\n" +
+               "Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length + "\r\n" +
+               "\r\n" +
+               body;
     }
 }

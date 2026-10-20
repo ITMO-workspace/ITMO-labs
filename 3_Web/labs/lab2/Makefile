@@ -3,7 +3,7 @@ HTTP_CONF=~/Code/ITMO-labs/3_Web/labs/lab2/httpd-root/conf/httpd.conf
 
 FCGI_PORT=2201
 
-SERVER_PORT=24000
+SERVER_PORT=24076
 
 JAR=server/target/server.jar
 
