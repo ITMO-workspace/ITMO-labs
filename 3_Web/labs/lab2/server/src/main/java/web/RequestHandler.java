@@ -73,8 +73,7 @@ public class RequestHandler {
     }
 
     private static String httpOk(String body) {
-        return "HTTP/1.1 200 OK\r\n" +
-               "Content-Type: application/json; charset=UTF-8\r\n" +
+        return "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length + "\r\n" +
                "\r\n" +
                body;
@@ -84,7 +83,7 @@ public class RequestHandler {
         String body = "{\"error\":\"" + message + "\"}";
         String reason = (status == 400) ? "Bad Request" : "Method Not Allowed";
         
-        return "HTTP/1.1 " + status + " " + reason + "\r\n" +
+        return "Status: " + status + " " + reason + "\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + body.getBytes(StandardCharsets.UTF_8).length + "\r\n" +
                "\r\n" +

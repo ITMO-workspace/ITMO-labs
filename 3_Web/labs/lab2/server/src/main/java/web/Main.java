@@ -18,14 +18,13 @@ public class Main {
         while (fcgiInterface.FCGIaccept() >= 0) {
             try {
                 Map<String, String> params = collectParams();
-                
                 String response = handler.handle(params);
                 
-                System.out.println(response);
+                System.out.print(response); // MUST BE print, not println, and must be System.out
+                System.out.flush();
                 
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("HTTP/1.1 500 Internal Server Error\r\nContent-Type: text/plain\r\nContent-Length: 21\r\n\r\nInternal Server Error");
             }
         }
     }
