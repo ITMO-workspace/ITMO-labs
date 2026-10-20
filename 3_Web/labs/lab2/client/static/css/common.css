@@ -1,0 +1,24 @@
+:root {
+    --white-bg-color: #fff;
+    --gray-bg-color: #484848;
+    --light-gray-bg-color: #f0efef;
+    --red-bg-color: #c00909;
+    --blue-bg-color: #0e6bb7;
+    --white-font-color: #fff;
+    --gray-font-color: #3e3e3e;
+    --header-fz: 16px;
+    --header-fs: italic;
+    --default-br: 8px
+}
+
+::selection {
+    background: #667eea;
+    color: white;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--white-bg-color);
+    margin: 0;
+    padding: 0;
+}

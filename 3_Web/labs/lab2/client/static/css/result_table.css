@@ -1,0 +1,21 @@
+#result-table {
+    border: 1px solid var(--gray-bg-color);
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#result-table th, td {
+    border: 1px solid var(--white-bg-color);
+    padding: 10px;
+    text-align: center;
+}
+
+#result-table th {
+    background-color: var(--gray-bg-color);
+    color: var(--white-font-color);
+}
+
+#result-table td {
+    background-color: var(--white-bg-color);
+}

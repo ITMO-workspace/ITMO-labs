@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/warning.css">
+    <link rel="stylesheet" href="css/result_table.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/canvas.css">
+    <title>Lab 1</title>
+</head>
+<body>
+    <div class="warning">
+        <h3 class="warning-title">Ошибка в вводе данных!</h2>
+        <p class="warning-text"></p>
+        <hr class="white-line">
+        <button class="warning-close" href="" class="close">OK</a>
+    </div>
+    <header>
+        <p>Веб-программирование, Лабораторная работа №1, Вариант 12641</p>
+        <p>Бых Даниил Максимович, P3209</p>
+    </header>
+    <div class="wrapper">
+        <canvas id="canvas"></canvas>
+
+        <form method="GET" id="main-form" action="">
+            <div class="input-holder" id="x-input-holder">
+                <p>Введите X (-3, ..., 3)</p>
+                <input type="text" name="X" id="X-input" required maxlength="15">
+            </div>
+
+            <div class="input-holder" id="y-input-holder">
+                <p>Выберите Y</p>
+                <div class="row">
+                    <div class="half-col">
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="-4" value="-4">
+                            <label for="-4">-4</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="-3" value="-3">
+                            <label for="-3">-3</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="-2" value="-2">
+                            <label for="-2">-2</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="-1" value="-1">
+                            <label for="-1">-1</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="0" value="0">
+                            <label for="0">0</label>
+                        </div>
+                    </div>
+                    
+                    <div class="half-col">
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="1" value="1">
+                            <label for="1">1</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="2" value="2">
+                            <label for="2">2</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="3" value="3">
+                            <label for="3">3</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="yInput" id="4" value="4">
+                            <label for="4">4</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-holder" id="r-input-holder">
+                <p>Выберите R</p>
+                <div class="row">
+                    <div class="half-col">
+                        <div class="radio-btn">
+                            <input type="radio" name="rInput" id="1" value="1">
+                            <label for="1">-1</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="rInput" id="1.5" value="1.5">
+                            <label for="1.5">1.5</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="rInput" id="2" value="2">
+                            <label for="2">2</label>
+                        </div>
+                    </div>
+                    <div class="half-col">
+                        <div class="radio-btn">
+                            <input type="radio" name="rInput" id="2.5" value="2.5">
+                            <label for="2.5">2.5</label>
+                        </div>
+                        <div class="radio-btn">
+                            <input type="radio" name="rInput" id="3" value="3">
+                            <label for="3">3</label>
+                        </div>
+                    </div>
+                </div>
+            </div>     
+            <input class="gray-rounded-btn" id="submit" type="submit" value="Отправить">
+        </form>
+
+        <table id="result-table">
+            <thead>
+                <tr>
+                    <th>x</th>
+                    <th>y</th>
+                    <th>r</th>
+                    <th>Отправлено</th>
+                    <th>Результат</th>
+                    <th>Обработано за</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/storage.js"></script>
+<script type="module" src="js/form.js"></script>
+<script type="text/javascript" src="js/warning.js"></script>
+<script type="text/javascript" src="js/canvas.js"></script>
+</html>

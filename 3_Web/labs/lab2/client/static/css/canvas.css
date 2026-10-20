@@ -1,0 +1,7 @@
+#canvas {
+    display: flex;
+    margin: 0 auto;
+    background-color: var(--gray-bg-color);
+    width: 300px;
+    height: 300px;
+}

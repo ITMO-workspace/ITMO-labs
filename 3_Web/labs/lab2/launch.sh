@@ -1,0 +1,1 @@
+make stop && make build && make run

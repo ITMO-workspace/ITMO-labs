@@ -1,0 +1,56 @@
+#main-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-holder {
+    margin: 20px 0;
+    display: flex;
+    border-radius: var(--default-br);
+    flex-direction: column;
+    background-color: var(--white-bg-color);
+    padding: 10px 25px;
+}
+
+.radio-btn {
+    margin-bottom: 5px;
+}
+
+#x-input-holder .row {
+    justify-content: left;
+}
+
+#x-input-holder .row .half-col {
+    margin-right: 20px;
+}
+
+#y-input-holder.input-holder {
+    padding: 20px 25px;
+}
+
+#r-input-holder input[type=button] {
+    max-width: 300px;
+}
+
+
+.gray-rounded-btn {
+    background-color: var(--gray-bg-color);
+    color: var(--white-font-color);
+    border: 2px solid var(--white-bg-color);
+    padding: 10px 15px;
+    border-radius: var(--default-br);
+}
+
+.gray-rounded-btn:hover {
+    background-color: var(--light-gray-bg-color);
+    border: 2px solid var(--gray-bg-color);
+    color: var(--gray-font-color);
+}
+
+.gray-rounded-btn:active {
+    scale: 0.9;
+}
+
+#submit {
+    width: 100%;
+}

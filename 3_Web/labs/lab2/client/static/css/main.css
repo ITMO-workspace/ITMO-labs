@@ -1,0 +1,13 @@
+.wrapper {
+    margin: 10px auto;
+    padding: 10px 20px;
+    max-width: 70%;
+    background-color: var(--light-gray-bg-color);
+    border-radius: var(--default-br);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
