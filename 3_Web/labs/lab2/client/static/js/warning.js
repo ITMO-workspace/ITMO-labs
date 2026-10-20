@@ -1,32 +1,33 @@
-const warningBlock = document.querySelector(".warning");
-const warningTitle = warningBlock.querySelector(".warning-title");
-const warningText = warningBlock.querySelector(".warning-text");
-const warningCloseBtn = warningBlock.querySelector(".warning-close");
+const $warningBlock = $(".warning");
+const $warningTitle = $warningBlock.find(".warning-title");
+const $warningText = $warningBlock.find(".warning-text");
+const $warningCloseBtn = $warningBlock.find(".warning-close");
 
-warningCloseBtn.addEventListener("click", closeWarning)
+$warningCloseBtn.on("click", closeWarning);
 
-function closeWarning() {
-    warningBlock.classList.remove("show")
+export function closeWarning() {
+    $warningBlock.removeClass("show");
 }
 
-function showInfo(message, title) {
-    showWarning("info", title, message)
+export function showInfo(message, title) {
+    showWarning("info", title, message);
 }
 
-function showError(message) {
-    showWarning("error", "Ошибка при вводе!", message)
+export function showError(message) {
+    showWarning("error", "Ошибка при вводе!", message);
 }
 
 function showWarning(type, title, message) {
     if (type === "error") {
-        warningTitle.textContent = title
-        warningBlock.style.backgroundColor = "var(--red-bg-color)"; 
+        $warningTitle.text(title);
+        $warningBlock.css("background-color", "var(--red-bg-color)"); 
     } else if (type === "info") {
-        warningTitle.textContent
-        warningBlock.style.backgroundColor = "var(--blue-bg-color)"; 
+        $warningTitle.text(title || "Информация");
+        $warningBlock.css("background-color", "var(--blue-bg-color)"); 
     } else {
         return;
     }
-    warningBlock.classList.add("show");
-    warningText.textContent = message
+    
+    $warningBlock.addClass("show");
+    $warningText.text(message);
 }

@@ -1,34 +1,27 @@
-const table = document.getElementById("result-table");
+const $table = $("#result-table");
 
 export function saveResult(data) {
-    const newRow = table.insertRow(-1);
+    const $newRow = $("<tr>");
 
-    const rowX = newRow.insertCell(0);
-    const rowY = newRow.insertCell(1);
-    const rowR = newRow.insertCell(2);
-    const rowTime = newRow.insertCell(3);
-    const rowResult = newRow.insertCell(4);
-    const rowScriptTime = newRow.insertCell(5);
+    const localTime = new Date().toLocaleString('ru-RU');
+
+    $("<td>").text(data.x).appendTo($newRow);
+    $("<td>").text(data.y).appendTo($newRow);
+    $("<td>").text(data.r).appendTo($newRow);
+    $("<td>").text(localTime).appendTo($newRow);
+    $("<td>").text(data.inside ? 'Попадание' : 'Промах').appendTo($newRow);
+    $("<td>").text(data.serverTime || "—").appendTo($newRow);
+    $("<td>").text(data.scriptTime ? data.scriptTime + " ms" : "—").appendTo($newRow);
+
+    $table.find("tbody").append($newRow);
 
     const prevResults = JSON.parse(localStorage.getItem("results") || "[]");
-    
     data.clientTime = new Date().toISOString();
     
     const updatedResults = [...prevResults, data];
     localStorage.setItem("results", JSON.stringify(updatedResults));
 
-    rowX.innerText = data.x.toString();
-    rowY.innerText = data.y.toString();
-    rowR.innerText = data.r.toString();
-    
-    rowTime.innerText = new Date(data.clientTime).toLocaleString('ru-RU');
-    rowResult.innerText = data.inside ? 'Внутри' : 'Снаружи';
-    rowScriptTime.innerText = data.scriptTime + " ms";
-
-    const warningBlock = document.querySelector(".warning");
-    if (warningBlock) {
-        warningBlock.classList.remove("show");
-    }
+    $(".warning").removeClass("show");
 }
 
 export function loadResults() {
@@ -37,20 +30,21 @@ export function loadResults() {
     
     const results = JSON.parse(saved);
     
-    while(table.rows.length > 1) {
-        table.deleteRow(1);
-    }
+    $table.find("tbody").empty();
     
     results.forEach(item => {
         if (item.x === undefined) return;
 
-        const newRow = table.insertRow(-1);
+        const $newRow = $("<tr>");
         
-        newRow.insertCell(0).innerText = item.x.toString();
-        newRow.insertCell(1).innerText = item.y.toString();
-        newRow.insertCell(2).innerText = item.r.toString();
-        newRow.insertCell(3).innerText = new Date(item.clientTime).toLocaleString('ru-RU');
-        newRow.insertCell(4).innerText = item.inside ? 'Попадание' : 'Промах';
-        newRow.insertCell(5).innerText = item.scriptTime ? item.scriptTime + " ms" : "—";
+        $("<td>").text(item.x).appendTo($newRow);
+        $("<td>").text(item.y).appendTo($newRow);
+        $("<td>").text(item.r).appendTo($newRow);
+        $("<td>").text(new Date(item.clientTime).toLocaleString('ru-RU')).appendTo($newRow);
+        $("<td>").text(item.inside ? 'Попадание' : 'Промах').appendTo($newRow);
+        $("<td>").text(item.serverTime || "—").appendTo($newRow);
+        $("<td>").text(item.scriptTime ? item.scriptTime + " ms" : "—").appendTo($newRow);
+
+        $table.find("tbody").append($newRow);
     });
 }
