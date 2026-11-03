@@ -40,20 +40,20 @@ function drawCanvas(currentR = R) {
     ctx.strokeStyle = '#4A90D9';
     ctx.lineWidth = 2;
 
-    ctx.fillRect(centerX, centerY, currentR, currentR / 2);
-    ctx.strokeRect(centerX, centerY, currentR, currentR / 2);
+    ctx.fillRect(centerX, centerY, currentR / 2, currentR);
+    ctx.strokeRect(centerX, centerY, currentR / 2, currentR);
 
     ctx.beginPath();
     ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, currentR, 0, -Math.PI / 2, true);
+    ctx.arc(centerX, centerY, currentR / 2, Math.PI, Math.PI / 2, true);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(centerX, centerY);
-    ctx.lineTo(centerX - currentR / 2, centerY);
-    ctx.lineTo(centerX, centerY - currentR / 2);
+    ctx.lineTo(centerX + currentR / 2, centerY);
+    ctx.lineTo(centerX, centerY - currentR);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();

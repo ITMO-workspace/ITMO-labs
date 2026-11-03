@@ -1,10 +1,10 @@
 import { saveResult } from './storage.js';
-import { showError } from './warning.js'; // <-- Import this
+import { showError } from './warning.js';
 
 export function bindEventListeners() {
     const $form = $("#main-form");
 
-    $form.on("submit", function(e) {
+    $form.on("submit", (e) => {
         e.preventDefault();
         
         const x = $("input[name='X']").val();
@@ -17,9 +17,10 @@ export function bindEventListeners() {
         }
 
         $.ajax({
-            url: `/fcgi-bin/server.jar?x=${x}&y=${y}&r=${r}`,
+            url: `/fcgi-bin/server.jar`,
             method: "GET",
             dataType: "json",
+            data: {x, y, r},
             success: (data) => {
                 saveResult(data);
             },

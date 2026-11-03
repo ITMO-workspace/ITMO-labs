@@ -6,22 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import web.models.Point;
 import web.models.RestrainedPoint;
 
 public class RequestHandler {
 
-    public String handle(Map<String, String> params) {
+    public String handle(Properties params) {
         long startTime = System.nanoTime();
 
-        String method = params.getOrDefault("REQUEST_METHOD", "GET");
+        String method = params.getProperty("REQUEST_METHOD", "GET");
         if (!"GET".equalsIgnoreCase(method)) {
             return errorJson(405, "Method Not Allowed");
         }
 
-        String queryString = params.getOrDefault("QUERY_STRING", "");
-        Map<String, String> query = parseQuery(queryString);
+        Map<String, String> query = parseQuery(params.getProperty("QUERY_STRING", ""));
 
         String rawX = query.get("x");
         String rawY = query.get("y");
@@ -30,37 +30,33 @@ public class RequestHandler {
         if (rawX == null || rawY == null || rawR == null) {
             return errorJson(400, "Missing required parameters: x, y, r");
         }
-
-        double x, y, r;
+        
         try {
-            x = Double.parseDouble(rawX.replace(",", "."));
-            y = Double.parseDouble(rawY);
-            r = Double.parseDouble(rawR);
+            Point point = new RestrainedPoint(rawX, rawY, rawR);
+            if (!point.coordsOk()) return errorJson(400, "Some of parameters are out of range.");
+
+            boolean inside = point.isInArea();
+            
+            long endTime = System.nanoTime();
+            double execTime = (endTime - startTime) / 1_000_000.0;
+            String scriptTimeStr = String.format("%.2f", execTime);
+            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+            String json = "{" +
+                "\"x\":" + point.getX().toPlainString() + "," +
+                "\"y\":" + point.getY() + "," +
+                "\"r\":" + point.getR() + "," +
+                "\"inside\":" + inside + "," +
+                "\"serverTime\":\"" + currentTime + "\"," +
+                "\"scriptTime\":\"" + scriptTimeStr + "\"" +
+            "}";
+
+            return httpOk(json);
         } catch (NumberFormatException e) {
-            return errorJson(400, "Parameters x, y, r must be numeric.");
+            return errorJson(400, "All parameters must be numeric.");
         }
 
-        Point point = new RestrainedPoint(x, y, r);
-
-        if (!point.coordsOk()) return errorJson(400, "Some of parameters (x, y, r) are invalid");
-
-        boolean inside = point.isInArea();
-        
-        long endTime = System.nanoTime();
-        double execTime = (endTime - startTime) / 1_000_000.0;
-        String scriptTimeStr = String.format("%.2f", execTime);
-        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
-        String json = "{" +
-            "\"x\":" + x + "," +
-            "\"y\":" + y + "," +
-            "\"r\":" + r + "," +
-            "\"inside\":" + inside + "," +
-            "\"serverTime\":\"" + currentTime + "\"," +
-            "\"scriptTime\":\"" + scriptTimeStr + "\"" +
-        "}";
-
-        return httpOk(json);
+       
     }
 
     private static Map<String, String> parseQuery(String qs) {

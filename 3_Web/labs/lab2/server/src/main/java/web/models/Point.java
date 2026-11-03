@@ -1,5 +1,7 @@
 package web.models;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Objects;
 
 /**
@@ -8,41 +10,49 @@ import java.util.Objects;
 */
 
 public abstract class Point {
-  protected final double x;
-  protected final double y;
-  protected final double r;
+  protected final BigDecimal x;
+  protected final BigInteger y;
+  protected final BigInteger r;
 
   protected final boolean isInArea;
 
-  public Point(double x, double y, double r) {
-    this.x = x;
-    this.y = y;
-    this.r = r;
-    this.isInArea = isInside(x, y, r);
+  public Point(String x, String y, String r) throws NumberFormatException {
+    this.x = parseDecimal(x);
+    this.y = parseInteger(y);
+    this.r = parseInteger(r);
+    this.isInArea = isInside(this.x, this.y, this.r);
   }
 
-  private boolean isInside(double x, double y, double r) {
-    if (x <= 0 && y <= 0) {
-      return (x * x + y * y) <= (r * r);
-    }
-    if (x >= 0 && y >= 0) {
-      return (x <= r / 2) && (y <= r);
-    }
-    if (x >= 0 && y < 0) {
-      return (x <= r/2) && (y >= -r);
-    }
-    return false;
+  private boolean isInside(BigDecimal x, BigInteger y, BigInteger r) {
+      BigDecimal bx = x;
+      BigDecimal by = new BigDecimal(y);
+      BigDecimal br = new BigDecimal(r);
+      BigDecimal rHalf = br.divide(BigDecimal.valueOf(2));
+      BigDecimal negR  = br.negate();
+
+      if (x.signum() <= 0 && y.signum() <= 0) {
+          BigDecimal sumSq = bx.multiply(bx).add(by.multiply(by));
+          BigDecimal rSq = br.multiply(br);
+          return sumSq.compareTo(rSq) <= 0;
+      }
+      if (x.signum() >= 0 && y.signum() >= 0) {
+          return bx.compareTo(rHalf) <= 0 && by.compareTo(br) <= 0;
+      }
+      if (x.signum() >= 0 && y.signum() < 0) {
+          return bx.compareTo(rHalf) <= 0 && by.compareTo(negR) >= 0;
+      }
+      return false;
   }
 
-  public double getX() {
+  public BigDecimal getX() {
     return x;
   }
 
-  public double getY() {
+  public BigInteger getY() {
     return y;
   }
 
-  public double getR() {
+  public BigInteger getR() {
     return r;
   }
 
@@ -55,7 +65,7 @@ public abstract class Point {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Point point = (Point) o;
-    return x == point.x && Double.compare(y, point.y) == 0 && r == point.r;
+    return x == point.x && y == point.y && r == point.r;
   }
 
   @Override
@@ -74,4 +84,7 @@ public abstract class Point {
   }
 
   public abstract boolean coordsOk();
+
+  public abstract BigInteger parseInteger(String value);
+  public abstract BigDecimal parseDecimal(String value);
 }

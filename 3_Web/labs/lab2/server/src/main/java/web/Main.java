@@ -17,8 +17,7 @@ public class Main {
 
         while (fcgiInterface.FCGIaccept() >= 0) {
             try {
-                Map<String, String> params = collectParams();
-                String response = handler.handle(params);
+                String response = handler.handle(FCGIInterface.request.params);
                 
                 System.out.print(response);
                 System.out.flush();
@@ -27,16 +26,5 @@ public class Main {
                 e.printStackTrace();
             }
         }
-    }
-
-    private static Map<String, String> collectParams() {
-        Map<String, String> map = new HashMap<>();
-        var params = FCGIInterface.request.params;
-        if (params == null) return map;
-
-        for (String key : params.stringPropertyNames()) {
-            map.put(key, params.getProperty(key));
-        }
-        return map;
     }
 }
