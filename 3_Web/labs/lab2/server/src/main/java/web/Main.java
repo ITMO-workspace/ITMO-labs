@@ -20,7 +20,7 @@ public class Main {
                 Map<String, String> params = collectParams();
                 String response = handler.handle(params);
                 
-                System.out.print(response); // MUST BE print, not println, and must be System.out
+                System.out.print(response);
                 System.out.flush();
                 
             } catch (Exception e) {
@@ -34,7 +34,6 @@ public class Main {
         var params = FCGIInterface.request.params;
         if (params == null) return map;
 
-        // Iterate over the Properties object
         for (String key : params.stringPropertyNames()) {
             map.put(key, params.getProperty(key));
         }

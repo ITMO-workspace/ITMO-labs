@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import web.models.Point;
+import web.models.RestrainedPoint;
 
 public class RequestHandler {
 
@@ -32,14 +33,17 @@ public class RequestHandler {
 
         double x, y, r;
         try {
-            x = Double.parseDouble(rawX);
+            x = Double.parseDouble(rawX.replace(",", "."));
             y = Double.parseDouble(rawY);
             r = Double.parseDouble(rawR);
         } catch (NumberFormatException e) {
             return errorJson(400, "Parameters x, y, r must be numeric.");
         }
 
-        Point point = new Point(x, y, r);
+        Point point = new RestrainedPoint(x, y, r);
+
+        if (!point.coordsOk()) return errorJson(400, "Some of parameters (x, y, r) are invalid");
+
         boolean inside = point.isInArea();
         
         long endTime = System.nanoTime();

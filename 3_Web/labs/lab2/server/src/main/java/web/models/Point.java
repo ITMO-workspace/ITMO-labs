@@ -3,16 +3,16 @@ package web.models;
 import java.util.Objects;
 
 /**
-* Model object for Point
+* Abstract model object for Point
 * @author Septyq
 */
 
-public class Point {
-  private final double x;
-  private final double y;
-  private final double r;
+public abstract class Point {
+  protected final double x;
+  protected final double y;
+  protected final double r;
 
-  private final boolean isInArea;
+  protected final boolean isInArea;
 
   public Point(double x, double y, double r) {
     this.x = x;
@@ -72,4 +72,6 @@ public class Point {
       ", isInArea=" + isInArea +
       '}';
   }
+
+  public abstract boolean coordsOk();
 }

@@ -1,3 +1,4 @@
-web/Main.class
+web/models/RestrainedPoint.class
 web/models/Point.class
 web/RequestHandler.class
+web/Main.class
