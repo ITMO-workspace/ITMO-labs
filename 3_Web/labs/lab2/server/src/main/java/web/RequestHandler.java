@@ -43,10 +43,10 @@ public class RequestHandler {
             String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
             String json = "{" +
-                "\"x\":" + point.getX().toPlainString() + "," +
-                "\"y\":" + point.getY() + "," +
-                "\"r\":" + point.getR() + "," +
-                "\"inside\":" + inside + "," +
+                "\"x\":\"" + point.getX().toPlainString() + "\"," +
+                "\"y\":\"" + point.getY() + "\"," +
+                "\"r\":\"" + point.getR() + "\"," +
+                "\"inside\":\"" + inside + "\"," +
                 "\"serverTime\":\"" + currentTime + "\"," +
                 "\"scriptTime\":\"" + scriptTimeStr + "\"" +
             "}";

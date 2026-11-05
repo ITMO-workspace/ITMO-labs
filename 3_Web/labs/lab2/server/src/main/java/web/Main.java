@@ -1,8 +1,6 @@
 package web;
 
 import com.fastcgi.FCGIInterface;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
 * Main class

@@ -17,10 +17,9 @@ export function bindEventListeners() {
         }
 
         $.ajax({
-            url: `/fcgi-bin/server.jar`,
+            url: `/fcgi-bin/server.jar?x=${x}&y=${y}&r=${r}`,
             method: "GET",
             dataType: "json",
-            data: {x, y, r},
             success: (data) => {
                 saveResult(data);
             },

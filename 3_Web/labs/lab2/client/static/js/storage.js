@@ -1,6 +1,7 @@
 const $table = $("#result-table");
 
 export function saveResult(data) {
+    console.log(data)
     const $newRow = $("<tr>");
 
     const localTime = new Date().toLocaleString('ru-RU');

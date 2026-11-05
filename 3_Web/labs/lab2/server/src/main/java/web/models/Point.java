@@ -12,21 +12,21 @@ import java.util.Objects;
 public abstract class Point {
   protected final BigDecimal x;
   protected final BigInteger y;
-  protected final BigInteger r;
+  protected final BigDecimal r;
 
   protected final boolean isInArea;
 
   public Point(String x, String y, String r) throws NumberFormatException {
     this.x = parseDecimal(x);
     this.y = parseInteger(y);
-    this.r = parseInteger(r);
+    this.r = parseDecimal(r);
     this.isInArea = isInside(this.x, this.y, this.r);
   }
 
-  private boolean isInside(BigDecimal x, BigInteger y, BigInteger r) {
+  private boolean isInside(BigDecimal x, BigInteger y, BigDecimal r) {
       BigDecimal bx = x;
       BigDecimal by = new BigDecimal(y);
-      BigDecimal br = new BigDecimal(r);
+      BigDecimal br = r;
       BigDecimal rHalf = br.divide(BigDecimal.valueOf(2));
       BigDecimal negR  = br.negate();
 
@@ -52,7 +52,7 @@ public abstract class Point {
     return y;
   }
 
-  public BigInteger getR() {
+  public BigDecimal getR() {
     return r;
   }
 
