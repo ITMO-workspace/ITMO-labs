@@ -1,0 +1,25 @@
+name: "assert count_ones(247923789) == 13"
+limit: 2000
+memory_size: 0x1000
+memory_mapped_io:
+  0x80: [247923789]
+  0x84: []
+reports:
+  - name: Step-by-step
+    slice: all
+    view: |
+      {pc:hex}:	{instruction:next}	T: {T:hex}	S: {S:hex}	A: {A:dec}	R: {R:hex}	{pc:label}
+  - name: Result
+    slice: last
+    view: |
+      numio[0x80]: {io:0x80:dec}
+      numio[0x84]: {io:0x84:dec}
+    assert: |
+      numio[0x80]: [] >>> []
+      numio[0x84]: [] >>> [13]
+  - name: Statistics
+    slice: last
+    view: |
+      instructions: {sim:instruction-count}
+      memory accesses: {mem:accesses-total}
+      {isa-specific}

@@ -1,145 +1,109 @@
-; reverse_string_pstr
-
     .data
-    .org 0x0
+.org             0x00
 
-input_addr:      .word 0x80
-output_addr:     .word 0x84
-const_newline:   .word 0x0A
-const_max:       .word 0x1F
-const_space:     .word 0x20
-const_one:       .word 0x01
-const_two:       .word 0x02
-const_four:      .word 0x04
-const_40:        .word 0x40
-const_pad:       .word 0x5F5F5F00
-const_fill:      .word 0x5F5F5F5F
-const_error:     .word 0xFFFFFFFF
-const_overflow:  .word 0xCCCCCCCC
-mask:            .word 0x000000FF
+; Result buffer: 0x20 bytes at 0x00, initial value '_'. Layout: [length][reversed characters]
+buf:             .byte  '________________________________'
+; Padding: a word store at buf[31] spills over 3 bytes after the buffer.
+buf_pad:         .word  0
 
-index:           .word 0
-cur_char:        .word 0
-ptr:             .word 0
-left:            .word 0
-temp:            .word 0
+; Constants
+const_1:         .word  1
+const_2:         .word  2
+const_4:         .word  4
+const_newline:   .word  0x0A               ; End of input
+const_fill:      .word  0x5F5F5F00         ; "___" in the three upper bytes, see 'store_ind buf_wptr'
+const_overflow:  .word  0xCCCCCCCC
+
+; Scratch stack for the characters: one word per character, grows up from 0x300.
+; Max 31 characters, so the limit is 0x300 + 31 * 4 = 0x37C.
+stack_base:      .word  0x300
+stack_limit:     .word  0x37C
+
+; Variables
+char:            .word  0                  ; The last read character
+sp:              .word  0                  ; Address of the first free word in the scratch stack
+buf_wptr:        .word  0                  ; Address in buf where the next character will be written
 
     .text
-    .org 0x88
+    .org         0x90
+
+; Algorithm:
+;   1. Read characters from 0x80 and push each of them to the scratch stack.
+;      Stop at '\n'. If the 32nd character is not '\n' -- overflow.
+;   2. length <- (sp - stack_base) / 4, write it as the first byte of buf.
+;   3. Pop characters (they come in reverse order), print each to 0x84
+;      and write it to buf.
+;
+; Each character is written to buf with a word store (acc32 has no byte store).
+; A word store writes 4 bytes: <char> + 3 bytes of const_fill ("___").
+; Characters go in ascending order, so every next store overwrites the spill of
+; the previous one, and after the last character the tail is exactly '_'.
+;
+; load_addr/store_addr are used everywhere, because the data is further than
+; 127 bytes from some instructions, which is the limit of load/store.
+
 _start:
-    ; fill mem[0x00..0x1F] with 0x5F
-    load_addr const_fill
-    store_addr 0x00
-    store_addr 0x04
-    store_addr 0x08
-    store_addr 0x0C
-    store_addr 0x10
-    store_addr 0x14
-    store_addr 0x18
-    store_addr 0x1C
+    load_addr    stack_base
+    store_addr   sp                          ; sp <- stack_base
 
-    load_imm 0
-    store_addr index
-    load_addr const_40
-    store_addr ptr
-
+; do {
 read_loop:
-    load_addr input_addr
-    load_acc
-    store_addr cur_char
+    load_addr    0x80                        ;     acc <- next input character
+    store_addr   char
+    sub          const_newline
+    beqz         read_done                   ;     if (char == '\n') break
 
-    sub const_newline
-    beqz end_read
+    load_addr    sp
+    sub          stack_limit
+    beqz         overflow                    ;     if (stack is full) goto overflow
 
-    load_addr index
-    sub const_max
-    bgez overflow
+    load_addr    char
+    store_ind    sp                          ;     *sp <- char
+    load_addr    sp
+    add          const_4
+    store_addr   sp                          ;     sp += 4
+    jmp          read_loop                   ; }
 
-    load_addr cur_char
-    sub const_space
-    bltz domain_err
+read_done:
+    load_addr    sp
+    sub          stack_base
+    shiftr       const_2                     ; acc <- length
+    or           const_fill
+    store_addr   buf                         ; buf[0] <- length, buf[1..3] <- '_'
 
-    ; scratch[index] = 0x5F5F5F00 | char
-    load_addr cur_char
-    add const_pad
-    store_ind ptr
+    load_imm     buf
+    add          const_1
+    store_addr   buf_wptr                    ; buf_wptr <- buf + 1
 
-    load_addr ptr
-    add const_four
-    store_addr ptr
+    load_addr    sp
+    sub          const_4
+    store_addr   sp                          ; sp <- address of the last pushed character
 
-    load_addr index
-    add const_one
-    store_addr index
-    jmp read_loop
+; while (sp >= stack_base) {
+write_loop:
+    load_addr    sp
+    sub          stack_base
+    bltz         write_done
 
-end_read:
-    ; mem[0] = length
-    load_imm 0
-    store_addr ptr
-    load_addr index
-    store_ind ptr
+    load_addr    sp
+    load_acc                                 ;     acc <- *sp
+    store_addr   0x84                        ;     print the character
+    or           const_fill
+    store_ind    buf_wptr                    ;     *buf_wptr <- char, spill '___'
 
-    ; copy reversed: for left = 1..N: mem[left] = scratch[N-left]
-    load_addr const_one
-    store_addr left
+    load_addr    buf_wptr
+    add          const_1
+    store_addr   buf_wptr                    ;     buf_wptr += 1
 
-copy_loop:
-    load_addr left
-    sub index
-    bgtz emit_start
+    load_addr    sp
+    sub          const_4
+    store_addr   sp                          ;     sp -= 4
+    jmp          write_loop                  ; }
 
-    ; ptr = 0x40 + (index - left) * 4
-    load_addr index
-    sub left
-    store_addr temp
-    load_addr temp
-    shiftl const_two
-    add const_40
-    store_addr ptr
-
-    load_addr ptr
-    load_acc
-    store_addr temp
-
-    load_addr left
-    store_addr ptr
-    load_addr temp
-    store_ind ptr
-
-    load_addr left
-    add const_one
-    store_addr left
-    jmp copy_loop
-
-emit_start:
-    load_addr const_one
-    store_addr left
-
-emit_loop:
-    load_addr left
-    sub index
-    bgtz done
-
-    load_addr left
-    load_acc
-    and mask
-    store_ind output_addr
-
-    load_addr left
-    add const_one
-    store_addr left
-    jmp emit_loop
-
-done:
+write_done:
     halt
 
 overflow:
-    load_addr const_overflow
-    store_ind output_addr
-    halt
-
-domain_err:
-    load_addr const_error
-    store_ind output_addr
+    load_addr    const_overflow
+    store_addr   0x84                        ; output <- 0xCCCCCCCC
     halt
