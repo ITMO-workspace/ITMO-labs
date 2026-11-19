@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QFD: портативная домашняя система накопления энергии</title>
+<style>
+:root{--bg:#fff;--fg:#2d2450;--muted:#6b6490;--line:#7a63b8;--head:#e6defa;--cell:#f4f0fd;--acc:#5b3fa8;--goal:#d8cdf6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17141f;--fg:#ece8fa;--muted:#a9a2c8;--line:#9a86d6;--head:#2c2548;--cell:#211c33;--acc:#b9a6f5;--goal:#3d3266}}
+:root[data-theme="dark"]{--bg:#17141f;--fg:#ece8fa;--muted:#a9a2c8;--line:#9a86d6;--head:#2c2548;--cell:#211c33;--acc:#b9a6f5;--goal:#3d3266}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px;color:var(--acc)}
+p.sub{margin:0 0 16px;color:var(--muted)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 24px;margin:12px 0;color:var(--muted);font-size:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left}th{background:var(--head)}
+.tw{overflow-x:auto}
+li{margin:4px 0}
+@page{size:A4 portrait;margin:14mm}
+@media print{
+:root,:root:not([data-theme="light"]){--bg:#fff;--fg:#2d2450;--muted:#6b6490;--line:#7a63b8;--head:#e6defa;--cell:#f4f0fd;--acc:#5b3fa8;--goal:#d8cdf6}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-size:12px;line-height:1.45}
+main{max-width:none;margin:0;padding:0}
+h1{font-size:19px}h2{font-size:15px;margin:18px 0 6px;break-after:avoid}
+.scroll,.tw{overflow:visible;border-radius:0}
+.scroll{break-inside:avoid}
+svg{width:100%;max-width:100%;height:auto;break-inside:avoid}
+table{font-size:11px}th,td{padding:4px 6px}
+tr,li,p{break-inside:avoid}
+.legend{font-size:11px}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>QFD-анализ: портативная домашняя система накопления энергии</h1>
+<p class="sub">Задание 6.1 · сектор Energy · «дом качества»</p>
+
+<div class="scroll"><svg id="h" viewBox="0 0 670 680" role="img" aria-label="Дом качества QFD"></svg></div>
+<div class="legend">
+<span><svg width="30" height="14" viewBox="0 0 30 14" style="min-width:0;width:30px"><circle cx="8" cy="7" r="5" fill="var(--acc)"/><circle cx="22" cy="7" r="5" fill="var(--acc)"/></svg> сильная связь — 9</span>
+<span><svg width="14" height="14" viewBox="0 0 14 14" style="min-width:0;width:14px"><circle cx="7" cy="7" r="5" fill="var(--acc)"/></svg> средняя — 3</span>
+<span><svg width="14" height="14" viewBox="0 0 14 14" style="min-width:0;width:14px"><circle cx="7" cy="7" r="5" fill="none" stroke="var(--acc)" stroke-width="1.6"/></svg> слабая — 1</span>
+<span>⊕ сильная положительная · + положительная · − отрицательная · ⊖ сильная отрицательная (корреляции в «крыше»)</span>
+</div>
+
+<h2>Оценка конкурентов</h2>
+<p class="sub">Шкала 1–5: 5 — продукт лучше всего отвечает запросу клиента. Оценки экспертные, по открытым спецификациям производителей; перед защитой сверьте с актуальными даташитами.</p>
+<div class="tw"><table>
+<tr><th>Продукт (ключевые параметры)</th><th>Емкость</th><th>Зарядка</th><th>PV-вход</th><th>Шум</th></tr>
+<tr><td>EcoFlow DELTA Pro</td><td>3,6 кВт·ч</td><td>до 80 % примерно за 1,8 ч</td><td>до 1,6 кВт</td><td>вентиляторы слышны при нагрузке</td></tr>
+<tr><td>Jackery Explorer 2000 Plus</td><td>≈2 кВт·ч</td><td>≈2 ч (сеть + PV)</td><td>до 1,4 кВт</td><td>умеренный</td></tr>
+<tr><td>Bluetti AC200L</td><td>2,4 кВт·ч</td><td>≈3 ч</td><td>до 2,4 кВт</td><td>умеренный</td></tr>
+</table></div>
+
+<h2>Оценка соответствия запросам клиентов (1–5)</h2>
+<p class="sub">5 — продукт лучше всего отвечает запросу, 1 — хуже всего. Столбец «Цель» — планируемый уровень нашего продукта.</p>
+<div class="tw"><table>
+<tr><th>Требование клиента</th><th>Приоритет</th><th>EcoFlow DELTA Pro</th><th>Jackery 2000 Plus</th><th>Bluetti AC200L</th><th>Цель</th></tr>
+<tr><td>Долгое время автономной работы (≥ 24 ч)</td><td>9</td><td>5</td><td>4</td><td>4</td><td><b>5</b></td></tr>
+<tr><td>Безопасность в квартире</td><td>9</td><td>4</td><td>4</td><td>4</td><td><b>5</b></td></tr>
+<tr><td>Быстрая зарядка (2–3 часа)</td><td>3</td><td>5</td><td>4</td><td>3</td><td><b>4</b></td></tr>
+<tr><td>Тихая работа (для ночного отдыха)</td><td>3</td><td>3</td><td>3</td><td>3</td><td><b>5</b></td></tr>
+<tr><td>Интеграция с солнечными панелями без настройки</td><td>3</td><td>5</td><td>4</td><td>4</td><td><b>5</b></td></tr>
+</table></div>
+
+<h2>Выводы: каким должен быть продукт</h2>
+<p>Для ранжирования характеристик перемножены приоритеты клиентов (1/3/9) и веса связей (9/3/1) и просуммированы по столбцам:</p>
+<ol>
+<li><b>Емкость ≥ 2 кВт·ч</b> — 93 балла. Обеспечивает 24 часа работы критичных нагрузок (холодильник, роутер, свет, около 80 Вт).</li>
+<li><b>LFP-химия и BMS с защитой от перегрева</b> — 90 баллов. Безопасность в квартире имеет максимальный приоритет, это обязательное условие выхода на рынок.</li>
+<li><b>Мощность зарядки от сети ≥ 1 кВт</b> — 57 баллов. Закрывает требование «2–3 часа» и задает основной конфликт в крыше дома (шум).</li>
+<li><b>КПД инвертора ≥ 92 %</b> — 48 баллов. Повышает автономность и снижает нагрев, то есть помогает сразу нескольким требованиям.</li>
+<li><b>MPPT-вход для PV ≥ 1 кВт</b> — 45 баллов. Подключение панелей без сложной настройки — отличие от конкурентов.</li>
+<li><b>Шум ≤ 30 dB</b> — 27 баллов. Вес ниже всех, но здесь у конкурентов самая слабая оценка (3), так что это зона для превосходства.</li>
+</ol>
+<p><b>Итоговый образ продукта:</b> компактная LFP-станция на 2–2,5 кВт·ч с многоуровневой защитой BMS и датчиками температуры, зарядкой от сети около 1 кВт (до 100 % за 2–3 ч), MPPT-входом для домашних PV-панелей и высокоэффективным инвертором. Конфликт «быстрая зарядка — тишина» решается пассивным охлаждением в ночном режиме и ограничением мощности зарядки по температуре, а не постоянной работой вентиляторов.</p>
+</main>
+
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg",svg=document.getElementById("h");
+function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!==undefined)e.textContent=t;svg.appendChild(e);return e}
+var X0=270,W=64,N=6,ROOFB=215,HEADH=180,RY=ROOFB+HEADH,RH=56;
+var cols=[["Емкость батареи","≥ 2 кВт·ч"],["LFP-химия + BMS","защита от перегрева"],["Зарядка от сети","≥ 1 кВт"],["Уровень шума","≤ 30 dB"],["MPPT-вход PV","≥ 1 кВт, plug-and-play"],["КПД инвертора","≥ 92 %"]];
+var rows=[[["Долгое время автономной","работы (≥ 24 ч)"],9],[["Безопасность в квартире"],9],[["Быстрая зарядка","(2–3 часа)"],3],[["Тихая работа","(для ночного отдыха)"],3],[["Интеграция с солнечными","панелями без настройки"],3]];
+var M=[{0:9,1:1,2:0,4:1,5:3},{0:1,1:9,2:3,5:1},{0:1,2:9,4:3},{2:1,3:9,5:3},{4:9,5:1}];
+var comp=[["EcoFlow","DELTA Pro"],["Jackery","2000 Plus"],["Bluetti","AC200L"],["Цель","нашего продукта"]];
+var S=[[5,4,4,5],[4,4,4,5],[5,4,3,4],[3,3,3,5],[5,4,4,5]];
+var roof=[[0,1,"−"],[0,2,"−"],[0,5,"+"],[1,2,"−"],[1,5,"+"],[2,3,"⊖"],[2,4,"⊕"],[3,5,"+"],[4,5,"+"]];
+var CX=X0+N*W+10,CW=50;
+var T=function(x,y,t,o){o=o||{};el("text",{x:x,y:y,"text-anchor":o.a||"middle","font-size":o.s||13,"font-weight":o.w||400,fill:o.f||"var(--fg)"},t)};
+// roof grid
+for(var i=0;i<N;i++)for(var j=i+1;j<N;j++){
+ var cx=X0+(i+j+1)*W/2,cy=ROOFB-(j-i)*W/2,h=W/2;
+ el("polygon",{points:[cx,cy-h,cx+h,cy,cx,cy+h,cx-h,cy].join(" "),fill:"var(--cell)",stroke:"var(--line)","stroke-width":1});
+}
+roof.forEach(function(r){var cx=X0+(r[0]+r[1]+1)*W/2,cy=ROOFB-(r[1]-r[0])*W/2;T(cx,cy+6,r[2],{s:20,w:700,f:"var(--acc)"})});
+// column headers
+el("rect",{x:X0,y:ROOFB,width:N*W,height:HEADH,fill:"var(--head)",stroke:"var(--line)"});
+for(var c=0;c<N;c++){
+ el("line",{x1:X0+c*W,y1:ROOFB,x2:X0+c*W,y2:RY+5*RH,stroke:"var(--line)"});
+ cols[c].forEach(function(t,k){var x=X0+c*W+W/2+(k-0.5)*16+4;el("text",{transform:"translate("+x+","+(RY-8)+") rotate(-90)","font-size":13,"font-weight":k?400:700,fill:"var(--fg)"},t)});
+}
+el("line",{x1:X0+N*W,y1:ROOFB,x2:X0+N*W,y2:RY+5*RH,stroke:"var(--line)"});
+T(X0+N*W/2,ROOFB-N*W/2-14+ (N*W/2)+ -5*0,"",{});
+// left headers
+el("rect",{x:20,y:RY-34,width:200,height:34,fill:"var(--head)",stroke:"var(--line)"});
+T(30,RY-12,"Требования клиентов",{a:"start",w:700});
+el("rect",{x:220,y:RY-34,width:50,height:34,fill:"var(--head)",stroke:"var(--line)"});
+T(245,RY-20,"Приори-",{s:11,w:700});T(245,RY-8,"тет",{s:11,w:700});
+T(X0+N*W/2,ROOFB+HEADH-HEADH-8,"Технические характеристики",{w:700,f:"var(--acc)"});
+// rows
+rows.forEach(function(r,i){
+ var y=RY+i*RH;
+ el("rect",{x:20,y:y,width:200,height:RH,fill:"var(--head)",stroke:"var(--line)"});
+ el("rect",{x:220,y:y,width:50,height:RH,fill:"var(--head)",stroke:"var(--line)"});
+ r[0].forEach(function(t,k){T(30,y+RH/2+4+(k-(r[0].length-1)/2)*16,t,{a:"start",s:13})});
+ T(245,y+RH/2+6,r[1],{s:18,w:700,f:"var(--acc)"});
+ for(var c=0;c<N;c++){
+  el("rect",{x:X0+c*W,y:y,width:W,height:RH,fill:"none",stroke:"var(--line)"});
+  var v=M[i][c],cx=X0+c*W+W/2,cy=y+RH/2;
+  if(v===9){el("circle",{cx:cx-8,cy:cy,r:6,fill:"var(--acc)"});el("circle",{cx:cx+8,cy:cy,r:6,fill:"var(--acc)"})}
+  else if(v===3)el("circle",{cx:cx,cy:cy,r:6,fill:"var(--acc)"});
+  else if(v===1)el("circle",{cx:cx,cy:cy,r:6,fill:"none",stroke:"var(--acc)","stroke-width":2});
+ }
+});
+})();
+</script>
+</body>
+</html>
